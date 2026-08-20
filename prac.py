@@ -1,30 +1,37 @@
-from collections import deque
-queue=deque([(3,3,0)])
+import heapq
+graph={
+    'S':['A','B'],
+    'A':['C','D'],
+    'B':['E'],
+    'C':[],
+    'D':['F'],
+    'E':['G'],
+    'F':[],
+    'G':[]
+}
+heuristic={
+    'S':6,
+    'A':4,
+    'B':5,
+    'C':2,
+    'D':3,
+    'E':4,
+    'F':1,
+    'G':0
+}
+queue=[(heuristic['S'],'S')]
 visited=set()
 while queue:
-    node=queue.popleft()
+    _ ,node=heapq.heappop(queue)
     if node not in visited:
-        print(node, end=" ")
+        print(node,end=" ")
         visited.add(node)
-        neighbours=[]
-        m,c,b=node
-        if node==(0,0,1):
-            print("\n Goal!!")
+        if node=='G':
+            print("\nGoal!!")
             break
-        moves=[(0,1),(0,2),(1,0),(1,1),(2,0)]
-        for x, y in moves:
-            if b==0:
-                new=(m-x,c-y,1)
-            else:
-                new=(m+x,c+y,0)
-            nm,nc,nb=new
-            if nc<0 or nm<0 or nm>3 or nc>3:
-                continue
-            if nm>0 and nm<nc:
-                continue
-            if 3-nm>0 and 3-nm<3-nc:
-                continue
-            neighbours.append(new)
-        for neighbour in neighbours:
+        neighbours=[]
+        for neighbour in graph[node]:
             if neighbour not in visited:
-                queue.append(neighbour)
+                neighbours.append(neighbour)
+        for neighbour in neighbours:
+            heapq.heappush(queue,(heuristic[neighbour],neighbour))
