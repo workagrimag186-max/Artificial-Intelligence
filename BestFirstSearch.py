@@ -1,4 +1,5 @@
 import heapq
+
 graph={
     'S':['A','B'],
     'A':['C','D'],
@@ -9,7 +10,8 @@ graph={
     'F':[],
     'G':[]
 }
-heuristic={
+
+h={
     'S':6,
     'A':4,
     'B':5,
@@ -19,19 +21,33 @@ heuristic={
     'F':1,
     'G':0
 }
-queue=[(heuristic['S'],'S')]
+
+queue=[(h['S'],'S')]
+
 visited=set()
+
 while queue:
-    _ ,node=heapq.heappop(queue)
+
+    _,node=heapq.heappop(queue)
+
     if node not in visited:
+
         print(node,end=" ")
+
         visited.add(node)
+
         if node=='G':
             print("\nGoal!!")
             break
+
         neighbours=[]
+
         for neighbour in graph[node]:
+
             if neighbour not in visited:
+
                 neighbours.append(neighbour)
+
         for neighbour in neighbours:
-            heapq.heappush(queue,(heuristic[neighbour],neighbour))
+
+            heapq.heappush(queue,(h[neighbour],neighbour))
