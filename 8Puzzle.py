@@ -20,7 +20,7 @@ while queue:
             print("\nGoal!!")
             break
 
-        zero=node.index(0)
+        zero=node.index(0) #4
 
         neighbours=[]
 
